@@ -58,12 +58,14 @@ Create `start.sh` to ensure proper environment:
 
 ```bash
 #!/bin/bash
-export PATH="/home/sprite/.local/share/mise/installs/elixir/1.19.5-otp-28/bin:/home/sprite/.local/share/mise/installs/erlang/28.3/bin:$PATH"                                              export HOME=/home/sprite
+export HOME=/home/sprite
 export MIX_HOME=/home/sprite/.mix
 export PORT=4000
 cd /home/sprite/my_app
-exec mix phx.server
+exec ~/.local/bin/mise exec -- mix phx.server
 ```
+
+Note: Using `mise exec` automatically sets up the correct PATH for the globally installed Erlang and Elixir versions, avoiding the need to hardcode version-specific paths.
 
 Make it executable: `chmod +x start.sh`
 
@@ -120,9 +122,21 @@ sprite-env services create caddy \
   --no-stream
 ```
 
-## Step 7: Access Your App
+## Step 7: Make the URL Public
 
-Your Phoenix app is now publicly accessible at:
+Once the Phoenix server and Caddy proxy are running, the user needs to expose the sprite URL publicly. This command must be run **outside the sprite** (on the user's local machine):
+
+```bash
+sprite -s <sprite-name> url update --auth public
+```
+
+**Important for agents:** After completing the setup steps above:
+1. Inform the user they need to run the above command on their local machine
+2. Wait for the user to confirm they have done this
+3. Use `curl` to verify the URL is accessible: `curl -I https://<sprite-name>.sprites.app/`
+4. Only declare the skill complete once you've confirmed the URL returns a successful response
+
+Your Phoenix app will then be publicly accessible at:
 ```
 https://<your-sprite-name>.sprites.app/
 ```
