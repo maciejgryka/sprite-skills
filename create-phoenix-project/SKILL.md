@@ -9,6 +9,21 @@ description: Create an Elixir/Phoenix project with LiveView and SQLite in Sprite
 
 This skill covers creating an Elixir/Phoenix project with LiveView and SQLite, then exposing it publicly through the Sprite proxy.
 
+## Step 0: Install mise
+
+If mise is not already installed, install it first:
+
+```bash
+curl https://mise.run | sh
+```
+
+Then add mise to your shell (for bash):
+
+```bash
+echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+source ~/.bashrc
+```
+
 ## Step 1: Install Erlang and Elixir with mise
 
 ```bash
